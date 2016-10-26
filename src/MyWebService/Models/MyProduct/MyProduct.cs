@@ -3,6 +3,10 @@ using Nest;
 
 namespace MyWebService.Models.MyProduct
 {
+    /// <summary>
+    /// Example model definition that supports annotations to guide 
+    /// Elastic Search mapping. 
+    /// </summary>
     [ElasticsearchType(Name = "MyProducts", IdProperty = "MyProductId")]
     public class MyProduct
     {
@@ -21,6 +25,9 @@ namespace MyWebService.Models.MyProduct
         [Date]
         public DateTime Modified { get; set; }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MyProduct()
         {
         }

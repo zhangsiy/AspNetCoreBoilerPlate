@@ -16,9 +16,9 @@ namespace MyWebService.Middlewares
         private readonly Logger _logger;
 
         /// <summary>
-        /// 
+        /// Constructor
         /// </summary>
-        /// <param name="next"></param>
+        /// <param name="next">The handle for the next link in the pipeline</param>
         public RequestLoggingMiddleware(RequestDelegate next)
         {
             _next = next;
@@ -26,10 +26,11 @@ namespace MyWebService.Middlewares
         }
 
         /// <summary>
-        /// 
+        /// The default required method for middlewares, entry point for the logic 
+        /// of the middleware.
         /// </summary>
-        /// <param name="context"></param>
-        /// <returns></returns>
+        /// <param name="context">HTTP Context</param>
+        /// <returns>Task facilitating the async operation</returns>
         public async Task Invoke(HttpContext context)
         {
             // Log request

@@ -5,6 +5,9 @@ using System.Threading.Tasks;
 
 namespace MyWebService.Data.ElasticSearch
 {
+    /// <summary>
+    /// Constants for Elastic Search
+    /// </summary>
     public static class EsConstants
     {
         /// <summary>

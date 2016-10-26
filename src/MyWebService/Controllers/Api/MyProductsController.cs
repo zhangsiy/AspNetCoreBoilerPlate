@@ -3,19 +3,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyWebService.Models.MyProduct;
-using NLog;
-
-// For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyWebService.Controllers.Api
 {
+    /// <summary>
+    /// Sample Controller for basic CRUD operations
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ResponseCache(CacheProfileName = "Default")]
     public class MyProductsController : Controller
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
+        private List<MyProduct> AllMyProducts { get; set; }
 
-        private List<MyProduct> AllMyProducts { get; set; } 
+        /// <summary>
+        /// Constructor
+        /// </summary>
         public MyProductsController()
         {
             AllMyProducts = new List<MyProduct> {
@@ -25,6 +27,10 @@ namespace MyWebService.Controllers.Api
             };
         }
 
+        /// <summary>
+        /// Get all entities 
+        /// </summary>
+        /// <returns>The list of entities</returns>
         [Route(""), HttpGet]
         public async Task<IEnumerable<MyProduct>> GetAll()
         {
@@ -32,6 +38,11 @@ namespace MyWebService.Controllers.Api
             return AllMyProducts;
         }
 
+        /// <summary>
+        /// Get entities by ID
+        /// </summary>
+        /// <param name="myProductId">The ID to find</param>
+        /// <returns>The entity matches the given ID</returns>
         [Route("{myProductId}"), HttpGet]
         public async Task<MyProduct> GetById(string myProductId)
         {

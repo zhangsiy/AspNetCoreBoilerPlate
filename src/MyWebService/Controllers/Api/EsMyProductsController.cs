@@ -3,21 +3,30 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using MyWebService.Data.ElasticSearch;
 using MyWebService.Models.MyProduct;
-using NLog;
 
 namespace MyWebService.Controllers.Api
 {
+    /// <summary>
+    /// Sample controller with Elastic Search support
+    /// </summary>
     [Route("api/v1/[controller]")]
     [ResponseCache(CacheProfileName = "Default")]
     public class EsMyProductsController: ApiWithEsControllerBase<MyProduct>
     {
-        private static Logger Logger = LogManager.GetCurrentClassLogger();
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="esRepository">The (injected) Elastic Search repository instance</param>
         public EsMyProductsController(IEsRepository esRepository)
             : base(esRepository)
         {
         }
 
+        /// <summary>
+        /// Get all MyProduct entities.
+        /// This performs an unbounded search on the index
+        /// </summary>
+        /// <returns>The list of entities</returns>
         [Route(""), HttpGet]
         public async Task<IEnumerable<MyProduct>> GetAll()
         {
@@ -26,6 +35,12 @@ namespace MyWebService.Controllers.Api
                 .Size(1000));
         }
 
+        /// <summary>
+        /// Get entities by ID
+        /// This performs a term query on the index with the ID given
+        /// </summary>
+        /// <param name="myProductId">The ID to search for</param>
+        /// <returns>The list of entities match the search</returns>
         [Route("{myProductId}"), HttpGet]
         public async Task<IEnumerable<MyProduct>> GetById(string myProductId)
         {
