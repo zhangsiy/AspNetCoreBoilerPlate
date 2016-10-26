@@ -11,6 +11,7 @@ namespace MyWebService.Controllers.Api
     /// </summary>
     [Route("api/v1/[controller]")]
     [ResponseCache(CacheProfileName = "Default")]
+    [Produces("application/json")]
     public class EsMyProductsController: ApiWithEsControllerBase<MyProduct>
     {
         /// <summary>
