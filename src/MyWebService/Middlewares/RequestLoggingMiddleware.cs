@@ -2,8 +2,8 @@
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 using NLog;
-using NuGet.Protocol.Core.v3;
 
 namespace MyWebService.Middlewares
 {
@@ -91,7 +91,7 @@ namespace MyWebService.Middlewares
                 request.Path,
                 request.ContentType,
                 request.ContentLength,
-                request.Headers.ToJson()
+                JsonConvert.SerializeObject(request.Headers)
             );
         }
 
@@ -101,7 +101,7 @@ namespace MyWebService.Middlewares
                 response.StatusCode,
                 response.ContentType,
                 response.ContentLength,
-                response.Headers.ToJson()
+                JsonConvert.SerializeObject(response.Headers)
             );
         }
     }
