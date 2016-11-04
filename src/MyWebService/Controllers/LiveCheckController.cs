@@ -1,5 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MyWebService.Models.HealthCheck;
 
 namespace MyWebService.Controllers
 {
@@ -14,13 +15,11 @@ namespace MyWebService.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public object Get()
+        public async Task<object> Get()
         {
-            return new
-            {
-                Message = "The Service Is Live!",
-                Version = Assembly.GetExecutingAssembly().GetName().Version.ToString(4),
-            };
+            return await new LiveCheckBuilder()
+                .RegisterSelfCheck()
+                .Run();
         }
 
     }

@@ -23,7 +23,10 @@
     "NEST": "2.4.6",
     "NLog": "4.3.9",
     "NLog.Extensions.Logging": "1.0.0-rtm-alpha4",
-    "Swashbuckle": "6.0.0-beta902"
+    "Swashbuckle": "6.0.0-beta902",
+    "System.Data.Common": "4.1.0",
+    "System.Data.SqlClient": "4.1.0",
+    "System.Runtime": "4.1.0"
   },
 
   "tools": {
