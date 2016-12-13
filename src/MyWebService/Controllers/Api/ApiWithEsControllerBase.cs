@@ -9,7 +9,7 @@ namespace MyWebService.Controllers.Api
     /// A base class implementation for API controllers that require AWS ElasticSearch support
     /// </summary>
     /// <typeparam name="TEntity">The type of the entity</typeparam>
-    public class ApiWithEsControllerBase<TEntity> : Controller where TEntity : class
+    public class ApiWithEsControllerBase<TEntity> : ControllerBase where TEntity : class
     {
         /// <summary>
         /// The (injected) Elastic Search repository instance
@@ -32,10 +32,11 @@ namespace MyWebService.Controllers.Api
         /// <param name="rawQuery">The raw Elastic Search query to use</param>
         /// <returns>The collection of entities found via the query.</returns>
         [Route("~/api/v1/[controller]/raw/{rawQuery}"), HttpGet]
-        public async Task<IEnumerable<TEntity>> GetByRawQuery(string rawQuery)
+        public async Task<IActionResult> GetByRawQuery(string rawQuery)
         {
             // Example of using the query builder
-            return await EsRepository.SearchEntitiesAsyncWithQuery<TEntity>(q => q.Raw(rawQuery));
+            var result = await EsRepository.SearchEntitiesAsyncWithQuery<TEntity>(q => q.Raw(rawQuery));
+            return Json(result);
         }
     }
 }

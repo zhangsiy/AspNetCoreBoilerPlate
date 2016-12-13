@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using MyWebService.Controllers.Api.Common.ResponseBuilder;
 using MyWebService.Data.ElasticSearch;
 using MyWebService.Models.MyProduct;
 
@@ -11,7 +11,6 @@ namespace MyWebService.Controllers.Api
     /// </summary>
     [Route("api/v1/[controller]")]
     [ResponseCache(CacheProfileName = "Default")]
-    [Produces("application/json")]
     public class EsMyProductsController: ApiWithEsControllerBase<MyProduct>
     {
         /// <summary>
@@ -29,11 +28,12 @@ namespace MyWebService.Controllers.Api
         /// </summary>
         /// <returns>The list of entities</returns>
         [Route(""), HttpGet]
-        public async Task<IEnumerable<MyProduct>> GetAll()
+        public async Task<IActionResult> GetAll()
         {
             // Example of using the search request builder
-            return await EsRepository.SearchEntitiesAsync<MyProduct>(s => s
+            var products = await EsRepository.SearchEntitiesAsync<MyProduct>(s => s
                 .Size(1000));
+            return Json(products);
         }
 
         /// <summary>
@@ -43,11 +43,12 @@ namespace MyWebService.Controllers.Api
         /// <param name="myProductId">The ID to search for</param>
         /// <returns>The list of entities match the search</returns>
         [Route("{myProductId}"), HttpGet]
-        public async Task<IEnumerable<MyProduct>> GetById(string myProductId)
+        public async Task<IActionResult> GetById(string myProductId)
         {
             // Example of using the query builder
-            return await EsRepository.SearchEntitiesAsyncWithQuery<MyProduct>(q => q
+            var result = await EsRepository.SearchEntitiesAsyncWithQuery<MyProduct>(q => q
                 .Term("myProductId", myProductId));
+            return Json(result);
         }
     }
 }
